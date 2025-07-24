@@ -3,8 +3,8 @@ import { renderApp } from "./App";
 
 export function Table() {
   //get current state
-  const tableDiv = document.createElement("div");
   const formDatas = getAllFormItems();
+  const tableDiv = document.createElement("div");
   tableDiv.className = "table-main";
   tableDiv.innerHTML = `
   <table>
@@ -38,7 +38,9 @@ export function Table() {
        </tbody>
      </table>
      `;
-
+  if (formDatas.length === 0) {
+    tableDiv.style.display = "none";
+  }
   //delete
   tableDiv
     .querySelectorAll(".delete-btn")

@@ -60,6 +60,12 @@ form select {
 #status {
   line-height: 18px;
 }
+/*validation error */
+.validation-error {
+  color: red;
+  line-height: 0.7;
+  font-size: small;
+}
 
 /*Button CSS */
 #submitBtn {

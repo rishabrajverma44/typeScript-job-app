@@ -57,7 +57,8 @@ export function formEdidMood(id: string) {
 export function setForm(form: formInterface) {
   if (form.Id != null) {
     //update
-    const index = state.forms.findIndex((form) => form.Id == form.Id);
+    const currentID = form.Id;
+    const index = state.forms.findIndex((form) => form.Id === currentID);
     if (index !== -1) {
       state.forms[index] = form;
     }
