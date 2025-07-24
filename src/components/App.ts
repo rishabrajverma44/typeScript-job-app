@@ -6,7 +6,6 @@ export function renderApp() {
   const app = document.createElement("div");
   app.className = "my-app";
   //insert elements in seperate div with class name my-app
-  app.appendChild(Form());
 
   const mainDiv = document.createElement("div");
   mainDiv.className = "main-div";

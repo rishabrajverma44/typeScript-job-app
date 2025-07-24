@@ -4,14 +4,18 @@
   padding: 0%;
   font-family: sans-serif;
 }
-.app {
-  background-color: beige;
-}
 .main-div {
+  padding: 15px;
   display: flex;
   justify-content: space-around;
   gap: 5px;
   width: 100%;
+}
+.main-form {
+  flex: 0 0 20%;
+}
+.table-main {
+  flex: 0 0 80%;
 }
 
 /* form */
@@ -51,6 +55,7 @@ form select {
 #status {
   line-height: 18px;
 }
+
 /*Button CSS */
 #submitBtn {
   background-color: rgb(10, 10, 10);
@@ -79,4 +84,52 @@ button {
 button:hover {
   background-color: rgb(109, 109, 109);
   cursor: pointer;
+}
+
+/* table css */
+table {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid black;
+}
+td {
+  padding: 5px;
+  text-align: start;
+}
+tr {
+  border: 1px solid black;
+}
+.table-main {
+  flex: 0 0 80%;
+  width: 100%;
+  overflow-x: auto;
+}
+th {
+  border-bottom: 2px solid black;
+  padding: 3px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  text-align: start;
+  min-width: 120px;
+}
+table {
+  border-collapse: collapse;
+}
+button.edit,
+button.delete {
+  margin-right: 5px;
+}
+#clearBtn {
+  display: none;
+}
+/*edit delete btn */
+.delete,
+.edit {
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 8px;
+  width: 70px;
+  height: 23px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 2px bisque;
 }
