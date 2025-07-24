@@ -1,20 +1,14 @@
-import { setForm } from "../app.state";
+import { getFormState, setForm } from "../app.state";
+import { renderApp } from "./App";
 
 export function Form() {
   const formDiv = document.createElement("div");
-  const formState = {
-    Id: null,
-    company: "company",
-    role: "role",
-    jobType: "Remote",
-    location: "location",
-    date: "2025-12-09",
-    status: "Applied",
-    notes: "my notes",
-  };
+  const formState = getFormState();
 
   formDiv.className = "main-form";
-  formDiv.innerHTML = `
+  const form = document.createElement("form");
+  formDiv.appendChild(form);
+  formDiv.innerHTML = `<form>
   <div id='applicationForm'>
       <label for="company">Company Name:</label>
       <input type="text" id="company" placeholder="Company name" value="${
@@ -82,6 +76,7 @@ export function Form() {
         ${formState.Id ? "Update" : "Add"} Application
       </button>
     </div>
+    </form>
     `;
 
   // Grab all DOM elements inside the form
@@ -130,7 +125,7 @@ export function Form() {
   });
 
   //submit
-  formDiv.addEventListener("click", (e) => {
+  formDiv.addEventListener("submit", (e) => {
     e.preventDefault();
     let isValid = true;
     //validation check
@@ -187,6 +182,7 @@ export function Form() {
     };
 
     setForm(formData);
+    renderApp();
   });
 
   return formDiv;

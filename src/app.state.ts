@@ -29,9 +29,13 @@ export const state: stateInterface = {
     notes: "",
   },
 };
-
+//export for table data
 export function getAllFormItems() {
   return state.forms;
+}
+//export current state of form
+export function getFormState() {
+  return state.form;
 }
 export function formEdidMood() {}
 export function setForm(form: formInterface) {

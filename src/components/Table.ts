@@ -14,13 +14,13 @@ export function Table() {
         ${formDatas
           .map(
             (form) => `<tr>
-          <td>company name</td>
-          <td>role</td>
-          <td>job type</td>
-          <td>location</td>
-          <td>date</td>
-          <td>status</td>
-          <td>notes</td>
+          <td>${form.company}</td>
+          <td>${form.role}</td>
+          <td>${form.jobType}</td>
+          <td>${form.location}</td>
+          <td>${form.date}</td>
+          <td>${form.status}</td>
+          <td>${form.notes}</td>
           <td >
             <button >Edit</button>
             <button >Delete</button>

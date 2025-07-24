@@ -4,6 +4,10 @@ import { Table } from "./Table";
 
 export function renderApp() {
   const root = document.getElementById("app");
+  if (root) {
+    root.innerHTML = "";
+  }
+
   const app = document.createElement("div");
   app.className = "my-app";
   //insert elements in seperate div with class name my-app
@@ -15,6 +19,6 @@ export function renderApp() {
   mainDiv.appendChild(Table());
 
   app.appendChild(mainDiv);
-  app.appendChild(mainDiv);
+
   root?.append(app);
 }
