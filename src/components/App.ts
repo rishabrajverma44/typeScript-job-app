@@ -1,4 +1,5 @@
 import { Form } from "./Form";
+import { Header } from "./Header";
 import { Table } from "./Table";
 
 export function renderApp() {
@@ -6,6 +7,7 @@ export function renderApp() {
   const app = document.createElement("div");
   app.className = "my-app";
   //insert elements in seperate div with class name my-app
+  app.appendChild(Header());
 
   const mainDiv = document.createElement("div");
   mainDiv.className = "main-div";

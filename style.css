@@ -133,3 +133,30 @@ button.delete {
   font-size: 14px;
   box-shadow: 0 2px 2px bisque;
 }
+
+/* media queies */
+@media screen and (max-width: 600px) {
+  .main-div {
+    flex-direction: column;
+  }
+  .main-form,
+  .table-main {
+    flex: 0 0 100%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .main-div {
+    flex-direction: column;
+  }
+  .main-form,
+  .table-main {
+    flex: 0 0 100%;
+    padding: 10px;
+  }
+  .delete {
+    margin-top: 2px;
+  }
+  #date {
+    min-width: 100px;
+  }
+}

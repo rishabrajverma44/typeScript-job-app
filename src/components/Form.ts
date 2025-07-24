@@ -6,7 +6,7 @@ export function Form() {
     role: "role",
     jobType: "Remote",
     location: "location",
-    date: "12-09-2025",
+    date: "2025-12-09",
     status: "Applied",
     notes: "my notes",
   };
@@ -114,6 +114,18 @@ export function Form() {
   jobType?.addEventListener("change", toggleLocationField);
   toggleLocationField();
   erorLocation!.style.display = "none";
+
+  // Hide error spans innitially
+  [
+    erorCompany,
+    erorJobRole,
+    erorJobType,
+    erorLocation,
+    erorJobStatus,
+    erorDate,
+  ].forEach((el) => {
+    el!.style.display = "none";
+  });
 
   //submit
   formDiv.addEventListener("click", (e) => {
