@@ -37,17 +37,31 @@ export function getAllFormItems() {
 export function getFormState() {
   return state.form;
 }
-export function formEdidMood() {}
+export function deleteById(id: string) {
+  console.log(id);
+  const filterForm = state.forms.filter((item) => item.Id !== id);
+  state.forms = filterForm;
+  saveToStorage();
+}
+export function formEdidMood(id: string) {
+  if (id) {
+    const currentForm: formInterface | any = state.forms.find(
+      (form) => form.Id === id
+    );
+    state.form = currentForm;
+  }
+}
 export function setForm(form: formInterface) {
   if (form.Id != null) {
     //update
-    const index = state.forms.find((item) => item.Id == form.Id);
-    console.log(index);
+    const index = state.forms.findIndex((item) => item.Id == form.Id);
+    if (index !== -1) {
+      state.forms[index] = form;
+    }
   } else {
     //add
     form.Id = generateId();
     state.forms.push(form);
   }
   saveToStorage();
-  console.log(state);
 }

@@ -1,4 +1,5 @@
-import { getAllFormItems } from "../app.state";
+import { deleteById, formEdidMood, getAllFormItems } from "../app.state";
+import { renderApp } from "./App";
 
 export function Table() {
   //get current state
@@ -22,8 +23,8 @@ export function Table() {
           <td>${form.status}</td>
           <td>${form.notes}</td>
           <td >
-            <button >Edit</button>
-            <button >Delete</button>
+            <button class="edit-btn" data-id=${form.Id}>Edit</button>
+            <button class="delete-btn" data-id=${form.Id}>Delete</button>
           </td>
         </tr>`
           )
@@ -31,6 +32,30 @@ export function Table() {
        </tbody>
      </table>
      `;
+
+  //delete
+  tableDiv
+    .querySelectorAll(".delete-btn")
+    .forEach((deleteBtn: HTMLButtonElement | any) => {
+      deleteBtn.addEventListener("click", () => {
+        if (confirm("Do you want to delete ?")) {
+          const id = deleteBtn.dataset.id;
+          deleteById(id);
+          renderApp();
+        }
+      });
+    });
+
+  //edit
+  tableDiv
+    .querySelectorAll(".edit-btn")
+    .forEach((editBtn: HTMLBRElement | any) => {
+      editBtn.addEventListener("click", () => {
+        const id = editBtn.dataset.id;
+        formEdidMood(id);
+        renderApp();
+      });
+    });
 
   return tableDiv;
 }
