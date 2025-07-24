@@ -5,10 +5,11 @@
   font-family: sans-serif;
 }
 .main-div {
-  padding: 15px;
+  padding-left: 10px;
+  padding-right: 30px;
   display: flex;
   justify-content: space-around;
-  gap: 5px;
+  gap: 15px;
   width: 100%;
 }
 .main-form {
@@ -16,6 +17,10 @@
 }
 .table-main {
   flex: 0 0 80%;
+}
+/* header */
+.header {
+  text-align: center;
 }
 
 /* form */
@@ -132,4 +137,40 @@ button.delete {
   cursor: pointer;
   font-size: 14px;
   box-shadow: 0 2px 2px bisque;
+}
+
+/* media queies */
+@media screen and (max-width: 600px) {
+  .main-div {
+    flex-direction: column;
+    padding: 0px;
+  }
+  .main-form,
+  .table-main {
+    flex: 0 0 100%;
+  }
+  .header {
+    font-size: small;
+  }
+}
+@media screen and (max-width: 900px) {
+  .main-div {
+    flex-direction: column;
+  }
+  .main-form,
+  .table-main {
+    flex: 0 0 100%;
+    padding: 10px;
+  }
+  .delete {
+    margin-top: 2px;
+  }
+  #date {
+    min-width: 100px;
+  }
+  .action {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+  }
 }
