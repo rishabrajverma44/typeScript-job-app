@@ -9,7 +9,7 @@ export function Header() {
   const rejected = 6;
   Header.innerHTML = `
      <div class="header">
-       <h4>Job Application Tracker</h4>
+       <h2>Job Application Tracker</h2>
          <p>
            <span>Job Application : ${total}</span> 
            <span>Applied : ${applied}</span> 

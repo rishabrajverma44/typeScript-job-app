@@ -17,6 +17,10 @@
 .table-main {
   flex: 0 0 80%;
 }
+/* header */
+.header {
+  text-align: center;
+}
 
 /* form */
 form {
@@ -138,10 +142,14 @@ button.delete {
 @media screen and (max-width: 600px) {
   .main-div {
     flex-direction: column;
+    padding: 0px;
   }
   .main-form,
   .table-main {
     flex: 0 0 100%;
+  }
+  .header {
+    font-size: small;
   }
 }
 @media screen and (max-width: 900px) {
