@@ -1,10 +1,18 @@
 import { Form } from "./Form";
+import { Table } from "./Table";
 
 export function renderApp() {
   const root = document.getElementById("app");
   const app = document.createElement("div");
   app.className = "my-app";
   //insert elements in seperate div with class name my-app
-  app.appendChild(Form());
+
+  const mainDiv = document.createElement("div");
+  mainDiv.className = "main-div";
+  mainDiv.appendChild(Form());
+  mainDiv.appendChild(Table());
+
+  app.appendChild(mainDiv);
+  app.appendChild(mainDiv);
   root?.append(app);
 }
