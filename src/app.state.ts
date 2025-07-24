@@ -41,12 +41,11 @@ export function getFormState() {
 }
 // delete by id
 export function deleteById(id: string) {
-  console.log(id);
   const filterForm = state.forms.filter((form) => form.Id !== id);
   state.forms = filterForm;
   saveToStorage();
 }
-// edit by id
+// set edit form by id
 export function formEdidMood(id: string) {
   if (id) {
     const currentForm: formInterface | any = state.forms.find(

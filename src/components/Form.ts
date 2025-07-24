@@ -101,16 +101,20 @@ export function Form() {
 
   const toggleLocationField = () => {
     const isRemote = jobType?.value === "Remote";
-    location!.disabled = isRemote;
-    location!.style.display = isRemote ? "none" : "block";
-    locationLabel!.style.display = isRemote ? "none" : "block";
-    erorLocation!.style.display =
-      isRemote || jobType?.value === "" ? "none" : "block";
+    if (location && locationLabel && erorLocation) {
+      location.disabled = isRemote;
+      location.style.display = isRemote ? "none" : "block";
+      locationLabel.style.display = isRemote ? "none" : "block";
+      erorLocation.style.display =
+        isRemote || jobType?.value === "" ? "none" : "block";
+    }
   };
 
   jobType?.addEventListener("change", toggleLocationField);
   toggleLocationField();
-  erorLocation!.style.display = "none";
+  if (erorLocation) {
+    erorLocation.style.display = "none";
+  }
 
   // Hide error spans innitially
   [
@@ -121,7 +125,9 @@ export function Form() {
     erorJobStatus,
     erorDate,
   ].forEach((el) => {
-    el!.style.display = "none";
+    if (el) {
+      return (el.style.display = "none");
+    }
   });
 
   //submit
@@ -145,26 +151,30 @@ export function Form() {
       showError(role, erorJobRole);
       showError(date, erorDate);
     }
-    if (!jobType?.value) {
-      erorJobType!.style.display = "block";
-      jobType!.style.borderColor = "red";
+    if (!jobType?.value && erorJobType && jobType) {
+      erorJobType.style.display = "block";
+      jobType.style.borderColor = "red";
       isValid = false;
     } else {
-      erorJobType!.style.display = "none";
-      jobType.style.borderColor = "";
+      if (erorJobType && jobType) {
+        erorJobType.style.display = "none";
+        jobType.style.borderColor = "";
+      }
     }
     //if not remote then only check location error
     if (jobType?.value !== "Remote" && location && erorLocation) {
       showError(location, erorLocation);
     }
 
-    if (!status?.value) {
-      erorJobStatus!.style.display = "block";
-      status!.style.borderColor = "red";
+    if (!status?.value && erorJobStatus && status) {
+      erorJobStatus.style.display = "block";
+      status.style.borderColor = "red";
       isValid = false;
     } else {
-      erorJobStatus!.style.display = "none";
-      status.style.borderColor = "";
+      if (erorJobStatus && status) {
+        erorJobStatus!.style.display = "none";
+        status.style.borderColor = "";
+      }
     }
 
     if (!isValid) return;

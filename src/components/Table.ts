@@ -65,7 +65,7 @@ export function Table() {
   //edit
   tableDiv
     .querySelectorAll(".edit-btn")
-    .forEach((editBtn: HTMLBRElement | any) => {
+    .forEach((editBtn: HTMLButtonElement | any) => {
       editBtn.addEventListener("click", () => {
         const id = editBtn.dataset.id;
         formEdidMood(id);
