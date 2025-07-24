@@ -6,7 +6,7 @@
 }
 .main-div {
   padding-left: 10px;
-  padding-right: 30px;
+  padding-right: 25px;
   display: flex;
   justify-content: space-around;
   gap: 15px;
@@ -15,20 +15,39 @@
 .main-form {
   flex: 0 0 20%;
 }
+.not-found {
+  width: 100%;
+  text-align: center;
+}
+.form-div {
+  width: 100%;
+}
 .table-main {
   flex: 0 0 80%;
+  border: 1px solid black;
+  margin-top: 4px;
 }
 /* header */
 .header {
   text-align: center;
 }
-
+/* searchBox */
+#searchBox {
+  padding-left: 8px;
+  position: absolute;
+}
+#cancel {
+  margin-top: 4px;
+  position: relative;
+  right: 150px;
+}
+#search {
+  margin-left: 280px;
+}
 /* form */
 form {
-  border: 1px solid black;
   padding: 2px;
-  border-radius: 8px;
-  margin-top: 7px;
+  margin-top: 12px;
 }
 #applicationForm {
   display: flex;
@@ -59,6 +78,12 @@ form select {
 #jobType,
 #status {
   line-height: 18px;
+}
+/*validation error */
+.validation-error {
+  color: red;
+  line-height: 0.7;
+  font-size: small;
 }
 
 /*Button CSS */
@@ -93,7 +118,6 @@ button:hover {
 
 /* table css */
 table {
-  margin-top: 10px;
   width: 100%;
   border: 1px solid black;
 }
@@ -155,12 +179,13 @@ button.delete {
 }
 @media screen and (max-width: 900px) {
   .main-div {
+    padding: 10px;
     flex-direction: column;
   }
   .main-form,
   .table-main {
     flex: 0 0 100%;
-    padding: 10px;
+    padding: 1px;
   }
   .delete {
     margin-top: 2px;

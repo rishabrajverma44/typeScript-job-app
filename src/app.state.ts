@@ -1,4 +1,4 @@
-import { saveToStorage } from "./app.storage";
+import { loadFromStorage, saveToStorage } from "./app.storage";
 import { generateId } from "./utils/id";
 
 export interface formInterface {
@@ -14,7 +14,8 @@ export interface formInterface {
 
 interface stateInterface {
   forms: formInterface[];
-  form: formInterface;
+  form: formInterface | {};
+  searchQuery: string;
 }
 export const state: stateInterface = {
   forms: [],
@@ -28,6 +29,7 @@ export const state: stateInterface = {
     status: "",
     notes: "",
   },
+  searchQuery: "",
 };
 // for table data
 export function getAllFormItems() {
@@ -57,7 +59,8 @@ export function formEdidMood(id: string) {
 export function setForm(form: formInterface) {
   if (form.Id != null) {
     //update
-    const index = state.forms.findIndex((form) => form.Id == form.Id);
+    const currentID = form.Id;
+    const index = state.forms.findIndex((form) => form.Id === currentID);
     if (index !== -1) {
       state.forms[index] = form;
     }
@@ -66,6 +69,7 @@ export function setForm(form: formInterface) {
     form.Id = generateId();
     state.forms.push(form);
   }
+  state.form = {};
   saveToStorage();
 }
 // export header object for showing nubers
@@ -79,4 +83,30 @@ export function getStatus() {
     Rejected: state.forms.filter((form) => form.status === "Rejected").length,
   };
   return status;
+}
+
+//search filter
+export function setSearch(search: string) {
+  const searchQuery = search.trim().toLowerCase();
+  const filteredForms = state.forms.filter((form) => {
+    return (
+      form.company.toLowerCase().includes(searchQuery) ||
+      form.role.toLowerCase().includes(searchQuery) ||
+      form.jobType.toLowerCase().includes(searchQuery) ||
+      form.location.toLowerCase().includes(searchQuery) ||
+      form.status.toLowerCase().includes(searchQuery) ||
+      form.notes.toLowerCase().includes(searchQuery)
+    );
+  });
+  state.searchQuery = search;
+  state.forms = filteredForms;
+}
+//export search state
+export function searchState() {
+  return state.searchQuery;
+}
+//clear
+export function clearSearch() {
+  state.searchQuery = "";
+  loadFromStorage();
 }
