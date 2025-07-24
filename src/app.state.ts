@@ -14,7 +14,7 @@ export interface formInterface {
 
 interface stateInterface {
   forms: formInterface[];
-  form: formInterface | {};
+  form: formInterface;
   searchQuery: string;
 }
 export const state: stateInterface = {
@@ -69,7 +69,16 @@ export function setForm(form: formInterface) {
     form.Id = generateId();
     state.forms.push(form);
   }
-  state.form = {};
+  state.form = {
+    Id: null,
+    company: "",
+    role: "",
+    jobType: "",
+    location: "",
+    date: "",
+    status: "",
+    notes: "",
+  };
   saveToStorage();
 }
 // export header object for showing nubers
