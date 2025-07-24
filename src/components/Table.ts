@@ -1,4 +1,9 @@
-import { deleteById, formEdidMood, getAllFormItems } from "../app.state";
+import {
+  deleteById,
+  formEdidMood,
+  getAllFormItems,
+  searchState,
+} from "../app.state";
 import { renderApp } from "./App";
 
 export function Table() {
@@ -38,8 +43,11 @@ export function Table() {
        </tbody>
      </table>
      `;
-  if (formDatas.length === 0) {
-    tableDiv.style.display = "none";
+  if (formDatas.length === 0 && searchState() !== "") {
+    tableDiv.innerHTML = `<h1 class="not-found"> No  search result found !</h1>`;
+  }
+  if (formDatas.length === 0 && searchState() === "") {
+    tableDiv.innerHTML = `<h1 class="not-found"> No form !</h1>`;
   }
   //delete
   tableDiv
