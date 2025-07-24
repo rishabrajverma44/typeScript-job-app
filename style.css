@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+  margin: 0%;
+  padding: 0%;
+  font-family: sans-serif;
+}
+.app {
+  background-color: beige;
+}
+.main-div {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  width: 100%;
+}
+
+/* form */
+form {
+  border: 1px solid black;
+  padding: 2px;
+  border-radius: 8px;
+  margin-top: 7px;
+}
+#applicationForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+#applicationForm input,
+#applicationForm select {
+  box-shadow: none;
+  padding: 5px;
+  width: 100%;
+}
+
+form input,
+form select {
+  height: 32px;
+  width: 250px;
+  line-height: 32px;
+  border-radius: 8px;
+  border: 1px solid black;
+  font-size: medium;
+  background-color: white;
+}
+#notes {
+  font-size: 17px;
+}
+#jobType,
+#status {
+  line-height: 18px;
+}
+/*Button CSS */
+#submitBtn {
+  background-color: rgb(10, 10, 10);
+  color: white;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+#submitBtn:hover {
+  background-color: rgb(109, 109, 109);
+  cursor: pointer;
+}
+button {
+  background-color: rgb(10, 10, 10);
+  color: white;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 14px;
+  font-size: 12px;
+}
+button:hover {
+  background-color: rgb(109, 109, 109);
+  cursor: pointer;
+}
