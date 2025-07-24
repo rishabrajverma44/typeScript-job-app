@@ -5,10 +5,11 @@
   font-family: sans-serif;
 }
 .main-div {
-  padding: 15px;
+  padding-left: 10px;
+  padding-right: 30px;
   display: flex;
   justify-content: space-around;
-  gap: 5px;
+  gap: 15px;
   width: 100%;
 }
 .main-form {
@@ -166,5 +167,10 @@ button.delete {
   }
   #date {
     min-width: 100px;
+  }
+  .action {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
   }
 }

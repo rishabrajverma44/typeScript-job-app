@@ -29,20 +29,22 @@ export const state: stateInterface = {
     notes: "",
   },
 };
-//export for table data
+// for table data
 export function getAllFormItems() {
   return state.forms;
 }
-//export current state of form
+// current state of single form
 export function getFormState() {
   return state.form;
 }
+// delete by id
 export function deleteById(id: string) {
   console.log(id);
-  const filterForm = state.forms.filter((item) => item.Id !== id);
+  const filterForm = state.forms.filter((form) => form.Id !== id);
   state.forms = filterForm;
   saveToStorage();
 }
+// edit by id
 export function formEdidMood(id: string) {
   if (id) {
     const currentForm: formInterface | any = state.forms.find(
@@ -51,10 +53,11 @@ export function formEdidMood(id: string) {
     state.form = currentForm;
   }
 }
+// update and add new form
 export function setForm(form: formInterface) {
   if (form.Id != null) {
     //update
-    const index = state.forms.findIndex((item) => item.Id == form.Id);
+    const index = state.forms.findIndex((form) => form.Id == form.Id);
     if (index !== -1) {
       state.forms[index] = form;
     }
@@ -64,4 +67,16 @@ export function setForm(form: formInterface) {
     state.forms.push(form);
   }
   saveToStorage();
+}
+// export header object for showing nubers
+export function getStatus() {
+  const status = {
+    Total: state.forms.length,
+    Applied: state.forms.filter((form) => form.status === "Applied").length,
+    Interviewing: state.forms.filter((form) => form.status === "Interviewing")
+      .length,
+    Hired: state.forms.filter((form) => form.status === "Hired").length,
+    Rejected: state.forms.filter((form) => form.status === "Rejected").length,
+  };
+  return status;
 }

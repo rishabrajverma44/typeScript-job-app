@@ -18,11 +18,17 @@ export function Table() {
           <td>${form.company}</td>
           <td>${form.role}</td>
           <td>${form.jobType}</td>
-          <td>${form.location}</td>
+          <td>${form.location === "" ? "####" : form.location}</td>
           <td>${form.date}</td>
-          <td>${form.status}</td>
+          <td style="color:${
+            form.status === "Rejected"
+              ? "red"
+              : form.status === "Hired"
+              ? "green"
+              : ""
+          }">${form.status}</td>
           <td>${form.notes}</td>
-          <td >
+          <td class="action" >
             <button class="edit-btn" data-id=${form.Id}>Edit</button>
             <button class="delete-btn" data-id=${form.Id}>Delete</button>
           </td>

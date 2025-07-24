@@ -1,21 +1,19 @@
+import { getStatus } from "../app.state";
+
 export function Header() {
   const Header = document.createElement("div");
   Header.className = "counter";
   //header :
-  const total = 5;
-  const applied = 7;
-  const interviewing = 3;
-  const hired = 2;
-  const rejected = 6;
+  const status = getStatus();
   Header.innerHTML = `
      <div class="header">
        <h2>Job Application Tracker</h2>
          <p>
-           <span>Job Application : ${total}</span> 
-           <span>Applied : ${applied}</span> 
-           <span>Interviewing : ${interviewing}</span> 
-           <span>Hired : ${hired}</span> 
-           <span>Rejected : ${rejected}</span>
+           <span>Job Application : ${status.Total}</span> 
+           <span>Applied : ${status.Applied}</span> 
+           <span>Interviewing : ${status.Interviewing}</span> 
+           <span>Hired : ${status.Hired}</span> 
+           <span>Rejected : ${status.Rejected}</span>
         </p>
      </div>`;
 
