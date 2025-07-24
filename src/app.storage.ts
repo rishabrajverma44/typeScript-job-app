@@ -4,10 +4,10 @@ export function loadFromStorage() {
   const storageData = localStorage.getItem("formData");
   if (storageData) {
     const data = JSON.parse(storageData);
-    state.items = data;
+    state.forms = data;
   }
 }
 
 export function saveToStorage() {
-  localStorage.setItem("formData", JSON.stringify(state.items));
+  localStorage.setItem("formData", JSON.stringify(state.forms));
 }
