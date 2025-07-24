@@ -1,7 +1,7 @@
 import { state } from "./app.state.js";
 
 export function loadFromStorage() {
-  const storageData = localStorage.getItem("formData");
+  const storageData = localStorage.getItem("formDatas");
   if (storageData) {
     const data = JSON.parse(storageData);
     state.forms = data;
@@ -9,5 +9,5 @@ export function loadFromStorage() {
 }
 
 export function saveToStorage() {
-  localStorage.setItem("formData", JSON.stringify(state.forms));
+  localStorage.setItem("formDatas", JSON.stringify(state.forms));
 }

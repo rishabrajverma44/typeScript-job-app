@@ -1,4 +1,7 @@
-interface formInterface {
+import { saveToStorage } from "./app.storage";
+import { generateId } from "./utils/id";
+
+export interface formInterface {
   Id: string | null;
   company: string;
   role: string;
@@ -27,6 +30,20 @@ export const state: stateInterface = {
   },
 };
 
-export function getAllFormItems() {}
+export function getAllFormItems() {
+  return state.forms;
+}
 export function formEdidMood() {}
-export function setForm() {}
+export function setForm(form: formInterface) {
+  if (form.Id != null) {
+    //update
+    const index = state.forms.find((item) => item.Id == form.Id);
+    console.log(index);
+  } else {
+    //add
+    form.Id = generateId();
+    state.forms.push(form);
+  }
+  saveToStorage();
+  console.log(state);
+}

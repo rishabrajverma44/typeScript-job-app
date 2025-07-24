@@ -1,3 +1,5 @@
+import { setForm } from "../app.state";
+
 export function Form() {
   const formDiv = document.createElement("div");
   const formState = {
@@ -175,16 +177,16 @@ export function Form() {
     // Prepare form
     const formData = {
       Id: formState.Id ? formState.Id : null,
-      company: company?.value.trim(),
-      role: role?.value.trim(),
-      jobType: jobType?.value,
-      location: jobType?.value === "Remote" ? "" : location?.value.trim(),
-      date: date?.value,
-      status: status?.value,
-      notes: notes?.value.trim(),
+      company: company?.value.trim() || "",
+      role: role?.value.trim() || "",
+      jobType: jobType?.value || "",
+      location: jobType?.value === "Remote" ? "" : location?.value.trim() || "",
+      date: date?.value || "",
+      status: status?.value || "",
+      notes: notes?.value.trim() || "",
     };
 
-    console.log("submit btn trrigered", formData);
+    setForm(formData);
   });
 
   return formDiv;
