@@ -13,13 +13,13 @@ export function Form() {
       <input type="text" id="company" placeholder="Company name" value="${
         formState.company || ""
       }"  />
-      <span class="validation-error" id="erorCompany">Enter company name</span>
+      <span class="validation-error" id="errorCompany">Enter company name</span>
 
       <label for="role">Role:</label>
       <input type="text" id="role" placeholder="Enter role" value="${
         formState.role || ""
       }" />
-      <span class="validation-error" id="erorJobRole">Enter job role</span>
+      <span class="validation-error" id="errorJobRole">Enter job role</span>
 
       <label for="jobType">Job Type:</label>
       <select id="jobType">
@@ -36,17 +36,17 @@ export function Form() {
           formState.jobType === "Hybrid" ? "selected" : ""
         }>Hybrid</option>
       </select>
-      <span class="validation-error" id="erorJobType">Select job type</span>
+      <span class="validation-error" id="errorJobType">Select job type</span>
 
       <label for="location" id="locationLabel">Location:</label>
       <input type="text" id="location" placeholder="Enter location" value="${
         formState.location || ""
       }" />
-      <span class="validation-error" id="erorLocation">Enter location</span>
+      <span class="validation-error" id="errorLocation">Enter location</span>
 
       <label for="date">Application Date:</label>
       <input type="date" id="date" value="${formState.date || ""}" />
-      <span class="validation-error" id="erorDate">Select date</span>
+      <span class="validation-error" id="errorDate">Select date</span>
 
       <label for="status">Application Status:</label>
       <select id="status" class="form-control">
@@ -66,7 +66,7 @@ export function Form() {
           formState.status === "Hired" ? "selected" : ""
         }>Hired</option>
       </select>
-      <span class="validation-error" id="erorJobStatus">Select job status</span>
+      <span class="validation-error" id="errorJobStatus">Select job status</span>
 
       <label for="notes">Notes:</label>
       <textarea id="notes" rows="3">${formState.notes || ""}</textarea>
@@ -89,30 +89,33 @@ export function Form() {
   const status: HTMLSelectElement | null = formDiv.querySelector("#status");
   const notes: HTMLInputElement | null = formDiv.querySelector("#notes");
 
-  const erorCompany: HTMLElement | null = formDiv.querySelector("#erorCompany");
-  const erorJobRole: HTMLElement | null = formDiv.querySelector("#erorJobRole");
-  const erorJobType: HTMLElement | null = formDiv.querySelector("#erorJobType");
-  const erorLocation: HTMLElement | null =
-    formDiv.querySelector("#erorLocation");
-  const erorDate: HTMLElement | null = formDiv.querySelector("#erorDate");
-  const erorJobStatus: HTMLElement | null =
-    formDiv.querySelector("#erorJobStatus");
+  const errorCompany: HTMLElement | null =
+    formDiv.querySelector("#errorCompany");
+  const errorJobRole: HTMLElement | null =
+    formDiv.querySelector("#errorJobRole");
+  const errorJobType: HTMLElement | null =
+    formDiv.querySelector("#errorJobType");
+  const errorLocation: HTMLElement | null =
+    formDiv.querySelector("#errorLocation");
+  const errorDate: HTMLElement | null = formDiv.querySelector("#errorDate");
+  const errorJobStatus: HTMLElement | null =
+    formDiv.querySelector("#errorJobStatus");
 
   const toggleLocationField = () => {
     const isRemote = jobType?.value === "Remote";
-    if (location && locationLabel && erorLocation) {
+    if (location && locationLabel && errorLocation) {
       location.disabled = isRemote;
-      location.style.display = isRemote ? "none" : "block";
-      locationLabel.style.display = isRemote ? "none" : "block";
-      erorLocation.style.display =
-        isRemote || jobType?.value === "" ? "none" : "block";
+      location.value = isRemote ? "" : location.value;
+      // locationLabel.style.display = isRemote ? "none" : "block";
+      // errorLocation.style.display =
+      //   isRemote || jobType?.value === "" ? "none" : "block";
     }
   };
 
   jobType?.addEventListener("change", toggleLocationField);
   toggleLocationField();
-  if (erorLocation) {
-    erorLocation.style.display = "none";
+  if (errorLocation) {
+    errorLocation.style.display = "none";
   }
   //update state here
   const updateState = () => {
@@ -147,33 +150,33 @@ export function Form() {
       }
     };
 
-    if (company && role && date && erorCompany && erorJobRole && erorDate) {
-      showError(company, erorCompany);
-      showError(role, erorJobRole);
-      showError(date, erorDate);
+    if (company && role && date && errorCompany && errorJobRole && errorDate) {
+      showError(company, errorCompany);
+      showError(role, errorJobRole);
+      showError(date, errorDate);
     }
-    if (!jobType?.value && erorJobType && jobType) {
-      erorJobType.style.display = "block";
+    if (!jobType?.value && errorJobType && jobType) {
+      errorJobType.style.display = "block";
       jobType.style.borderColor = "red";
       isValid = false;
     } else {
-      if (erorJobType && jobType) {
-        erorJobType.style.display = "none";
+      if (errorJobType && jobType) {
+        errorJobType.style.display = "none";
         jobType.style.borderColor = "";
       }
     }
     //if not remote then only check location error
-    if (jobType?.value !== "Remote" && location && erorLocation) {
-      showError(location, erorLocation);
+    if (jobType?.value !== "Remote" && location && errorLocation) {
+      showError(location, errorLocation);
     }
 
-    if (!status?.value && erorJobStatus && status) {
-      erorJobStatus.style.display = "block";
+    if (!status?.value && errorJobStatus && status) {
+      errorJobStatus.style.display = "block";
       status.style.borderColor = "red";
       isValid = false;
     } else {
-      if (erorJobStatus && status) {
-        erorJobStatus!.style.display = "none";
+      if (errorJobStatus && status) {
+        errorJobStatus!.style.display = "none";
         status.style.borderColor = "";
       }
     }
@@ -187,12 +190,12 @@ export function Form() {
 
   // Hide error spans innitially
   [
-    erorCompany,
-    erorJobRole,
-    erorJobType,
-    erorLocation,
-    erorJobStatus,
-    erorDate,
+    errorCompany,
+    errorJobRole,
+    errorJobType,
+    errorLocation,
+    errorJobStatus,
+    errorDate,
   ].forEach((el) => {
     if (el) {
       return (el.style.display = "none");
@@ -202,10 +205,8 @@ export function Form() {
   //submit
   formDiv.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log(e);
-    let isValid = vlidation();
-    if (!isValid) return;
 
+    if (!vlidation()) return;
     // Prepare form
     const formData = {
       Id: formState.Id ? formState.Id : null,

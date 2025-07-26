@@ -26,7 +26,7 @@ export function Table() {
           <td>${form.company}</td>
           <td>${form.role}</td>
           <td>${form.jobType}</td>
-          <td>${form.location === "" ? "####" : form.location}</td>
+          <td>${form.location === "" ? "N/A" : form.location}</td>
           <td>${form.date}</td>
           <td style="color:${
             form.status === "Rejected"
@@ -74,7 +74,7 @@ export function Table() {
   tableDiv.appendChild(model);
   tableDiv.appendChild(modelDelete);
   if (formDatas.length === 0 && searchState() !== "") {
-    tableDiv.innerHTML = `<h1 class="not-found"> No  search result found !</h1>`;
+    tableDiv.innerHTML = `<table><h1 class="not-found"> No  search result found !</h1></table>`;
   }
   if (formDatas.length === 0 && searchState() === "") {
     tableDiv.innerHTML = `<h1 class="not-found"> No form !</h1>`;

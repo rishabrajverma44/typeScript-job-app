@@ -19,7 +19,7 @@ export function Search() {
      <div id="customeModel" class="model">
       <div class="modal-container">
          <p>Please enter somthing !</p>
-         <button id="closeModalBtn">X</button>
+         <button id="closeModalBtn">Close</button>
       </div>
   </div>
   </div>
@@ -35,16 +35,20 @@ export function Search() {
   const cancelBtn: HTMLButtonElement | null =
     searchBox.querySelector("#cancel");
   const searchBtn = searchBox.querySelector("#search");
+
   //search
   const handleSearch = () => {
-    const searchQuery = input?.value.toLowerCase().trim();
-    if (searchQuery !== "" && typeof searchQuery === "string") {
-      setSearch(searchQuery);
-      renderApp();
-    } else {
-      const openModel = document.getElementById("mainModelSearch");
-      openModel!.style.display = "block";
-    }
+    setTimeout(() => {
+      console.log("ajjas");
+      const searchQuery = input?.value.toLowerCase().trim();
+      if (searchQuery !== "" && typeof searchQuery === "string") {
+        setSearch(searchQuery);
+        renderApp();
+      } else {
+        const openModel = document.getElementById("mainModelSearch");
+        openModel!.style.display = "block";
+      }
+    }, 1000);
   };
   //cancel
   const handleCancel = () => {
@@ -55,7 +59,7 @@ export function Search() {
     renderApp();
   };
   //control all events here
-  searchBtn?.addEventListener("click", handleSearch);
+  input?.addEventListener("change", handleSearch);
   cancelBtn?.addEventListener("click", handleCancel);
 
   return searchBox;
