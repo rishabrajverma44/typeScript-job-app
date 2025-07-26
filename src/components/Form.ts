@@ -72,7 +72,7 @@ export function Form() {
       <textarea id="notes" rows="3">${formState.notes || ""}</textarea>
 
       <button type="submit" id="submitBtn">
-        ${formState.Id ? "Update" : "Add"} Application
+        ${formState.Id ? "Update" : "Submit"} Application
       </button>
     </div>
     </form>

@@ -63,9 +63,9 @@ export function Table() {
   <div id="mainModelDelete" style="display : none">
      <div id="customeModel" class="model">
       <div class="modal-container">
-         <p>Want to delete ?</p>
+         <p>Are you sure want to delete ?</p>
+          <button id="closeModalBtn1">no</button>
           <button id="confirmModalBtn">yes</button>
-         <button id="closeModalBtn1">no</button>
       </div>
   </div>
   </div>

@@ -11,6 +11,7 @@
 }
 .main-form {
   flex: 0 0 20%;
+  padding: 10px;
 }
 
 /* header */
@@ -24,17 +25,17 @@
 }
 #cancel {
   margin-top: 4px;
+  font-size: small;
   position: relative;
-  right: 150px;
+  left: 200px;
 }
 #search {
   margin-left: 280px;
 }
 /* form */
-form {
-  padding: 2px;
+/* form {
   margin-top: 12px;
-}
+} */
 #applicationForm {
   display: flex;
   flex-direction: column;
@@ -49,7 +50,8 @@ form {
 }
 
 form input,
-form select {
+form select,
+#searchBox {
   height: 32px;
   width: 250px;
   line-height: 32px;
@@ -84,29 +86,43 @@ button {
   padding-top: 3px;
   padding-bottom: 3px;
   border-radius: 14px;
-  font-size: 12px;
+  font-size: 18px;
 }
 button:hover {
   background-color: rgb(109, 109, 109);
   cursor: pointer;
 }
 
-/* table css */
+/* /*main table * */
+.form-div {
+  padding: 10px;
+  flex: 0 0 80%;
+}
 
+/* table css */
 table {
   width: 100%;
   border-collapse: collapse;
 }
+thead {
+  border: 1px solid black;
+}
+th,
 td {
   border: 1px solid black;
-  padding: 5px;
+  padding-left: 4px;
   text-align: start;
 }
-
+.not-found {
+  flex: 0 0 80%;
+  text-align: center;
+  padding-top: 50px;
+}
 .table-main {
   flex: 0 0 80%;
   width: 100%;
   overflow-x: auto;
+  margin-top: 10px;
 }
 th {
   border-bottom: 2px solid black;
@@ -121,6 +137,13 @@ th {
   white-space: nowrap;
   max-width: 200px;
   overflow: hidden;
+}
+.edit-btn,
+.delete-btn {
+  font-size: 12px;
+  border-radius: 3px;
+  padding: 2px;
+  margin: 2px;
 }
 
 .model {
