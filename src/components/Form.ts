@@ -1,5 +1,4 @@
 import { getFormState, setForm, setFormStatus } from "../app.state";
-import { renderApp } from "./App";
 
 export function Form() {
   const formDiv = document.createElement("div");
@@ -220,7 +219,7 @@ export function Form() {
     };
 
     setForm(formData);
-    renderApp();
+    // renderApp();
   });
 
   return formDiv;

@@ -5,7 +5,6 @@ import {
   getFormStatus,
   searchState,
 } from "../app.state";
-import { renderApp } from "./App";
 
 export function Table() {
   //get current state
@@ -109,7 +108,7 @@ export function Table() {
           ?.addEventListener("click", () => {
             const id = deleteBtn.dataset.id;
             deleteById(id);
-            renderApp();
+            // renderApp();
           });
       });
     });
@@ -125,7 +124,7 @@ export function Table() {
         } else {
           const id = editBtn.dataset.id;
           formEdidMood(id);
-          renderApp();
+          // renderApp();
         }
       });
     });
