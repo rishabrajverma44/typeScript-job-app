@@ -16,6 +16,7 @@ interface stateInterface {
   forms: formInterface[];
   form: formInterface;
   searchQuery: string;
+  formstatus: boolean;
 }
 export const state: stateInterface = {
   forms: [],
@@ -30,6 +31,7 @@ export const state: stateInterface = {
     notes: "",
   },
   searchQuery: "",
+  formstatus: false,
 };
 // for table data
 export function getAllFormItems() {
@@ -39,14 +41,20 @@ export function getAllFormItems() {
 export function getFormState() {
   return state.form;
 }
+
+export function setFormStatus(result: boolean) {
+  state.formstatus = result;
+}
+export function getFormStatus() {
+  return state.formstatus;
+}
 // delete by id
 export function deleteById(id: string) {
-  console.log(id);
   const filterForm = state.forms.filter((form) => form.Id !== id);
   state.forms = filterForm;
   saveToStorage();
 }
-// edit by id
+// set edit form by id
 export function formEdidMood(id: string) {
   if (id) {
     const currentForm: formInterface | any = state.forms.find(
@@ -79,6 +87,7 @@ export function setForm(form: formInterface) {
     status: "",
     notes: "",
   };
+  state.formstatus = false;
   saveToStorage();
 }
 // export header object for showing nubers

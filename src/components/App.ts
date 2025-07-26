@@ -11,7 +11,6 @@ export function renderApp() {
 
   const app = document.createElement("div");
   app.className = "my-app";
-
   //insert elements in seperate div with class name my-app
   app.appendChild(Header());
 
@@ -29,5 +28,13 @@ export function renderApp() {
 
   app.appendChild(mainDiv);
 
-  root?.append(app);
+  app.appendChild(mainDiv);
+
+  //we can evalute is my current html node present then replace html node so it will act as clean up html or refresh DOM
+  const currentHTML = root?.querySelector(".my-app");
+  if (currentHTML) {
+    root?.replaceChild(app, currentHTML);
+  } else {
+    root?.appendChild(app);
+  }
 }
