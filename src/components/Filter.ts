@@ -33,7 +33,6 @@ export function Search() {
     searchBox.querySelector("#searchBox");
   const cancelBtn: HTMLButtonElement | null =
     searchBox.querySelector("#cancel");
-  const inputValue = "";
 
   //search
   function debounce() {

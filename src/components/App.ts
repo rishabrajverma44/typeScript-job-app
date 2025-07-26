@@ -1,5 +1,6 @@
 import { Search } from "./Filter";
 import { Form } from "./Form";
+import { FormNew } from "./Form1";
 import { Header } from "./Header";
 import { Table } from "./Table";
 
@@ -21,9 +22,10 @@ export function renderApp() {
   formDiv.className = "form-div";
 
   formDiv.appendChild(Search());
-  formDiv.appendChild(Table());
+  // formDiv.appendChild(Table());
+  formDiv.appendChild(Form());
 
-  mainDiv.appendChild(Form());
+  mainDiv.appendChild(FormNew());
   mainDiv.appendChild(formDiv);
 
   app.appendChild(mainDiv);

@@ -1,8 +1,9 @@
 import { getFormState, setForm, setFormStatus } from "../app.state";
 
 export function Form() {
-  const formDiv = document.createElement("div");
   const formState = getFormState();
+
+  const formDiv = document.createElement("div");
   formDiv.className = "main-form";
   const form = document.createElement("form");
   formDiv.appendChild(form);
