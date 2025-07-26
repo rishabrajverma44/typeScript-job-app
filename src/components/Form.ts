@@ -1,10 +1,9 @@
-import { getFormState, setForm } from "../app.state";
+import { getFormState, setForm, setFormStatus } from "../app.state";
 import { renderApp } from "./App";
 
 export function Form() {
   const formDiv = document.createElement("div");
   const formState = getFormState();
-
   formDiv.className = "main-form";
   const form = document.createElement("form");
   formDiv.appendChild(form);
@@ -13,7 +12,7 @@ export function Form() {
       <label for="company">Company Name:</label>
       <input type="text" id="company" placeholder="Company name" value="${
         formState.company || ""
-      }" />
+      }"  />
       <span class="validation-error" id="erorCompany">Enter company name</span>
 
       <label for="role">Role:</label>
@@ -115,24 +114,26 @@ export function Form() {
   if (erorLocation) {
     erorLocation.style.display = "none";
   }
-
-  // Hide error spans innitially
-  [
-    erorCompany,
-    erorJobRole,
-    erorJobType,
-    erorLocation,
-    erorJobStatus,
-    erorDate,
-  ].forEach((el) => {
-    if (el) {
-      return (el.style.display = "none");
-    }
-  });
-
-  //submit
-  formDiv.addEventListener("submit", (e) => {
-    e.preventDefault();
+  //update state here
+  const updateState = () => {
+    const formData = {
+      Id: formState.Id || null,
+      company: company?.value.trim() || "",
+      role: role?.value.trim() || "",
+      jobType: jobType?.value || "",
+      location: jobType?.value === "Remote" ? "" : location?.value.trim() || "",
+      date: date?.value || "",
+      status: status?.value || "",
+      notes: notes?.value.trim() || "",
+    };
+    const isDirty = Object.values(formData).some(
+      (val) => val !== "" && val !== null
+    );
+    setFormStatus(isDirty);
+  };
+  updateState();
+  //validation check function
+  const vlidation = () => {
     let isValid = true;
     //validation check
     const showError = (input: HTMLInputElement, errorElement: HTMLElement) => {
@@ -176,7 +177,33 @@ export function Form() {
         status.style.borderColor = "";
       }
     }
+    return isValid;
+  };
 
+  //
+  [company, role, jobType, location, date, status, notes].forEach((el) => {
+    el?.addEventListener("change", updateState);
+  });
+
+  // Hide error spans innitially
+  [
+    erorCompany,
+    erorJobRole,
+    erorJobType,
+    erorLocation,
+    erorJobStatus,
+    erorDate,
+  ].forEach((el) => {
+    if (el) {
+      return (el.style.display = "none");
+    }
+  });
+
+  //submit
+  formDiv.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log(e);
+    let isValid = vlidation();
     if (!isValid) return;
 
     // Prepare form

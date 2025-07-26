@@ -5,28 +5,14 @@
   font-family: sans-serif;
 }
 .main-div {
-  padding-left: 10px;
-  padding-right: 25px;
   display: flex;
   justify-content: space-around;
-  gap: 15px;
   width: 100%;
 }
 .main-form {
   flex: 0 0 20%;
 }
-.not-found {
-  width: 100%;
-  text-align: center;
-}
-.form-div {
-  width: 100%;
-}
-.table-main {
-  flex: 0 0 80%;
-  border: 1px solid black;
-  margin-top: 4px;
-}
+
 /* header */
 .header {
   text-align: center;
@@ -73,7 +59,10 @@ form select {
   background-color: white;
 }
 #notes {
+  padding: 3px;
   font-size: 17px;
+  min-height: 60px;
+  field-sizing: content;
 }
 #jobType,
 #status {
@@ -87,20 +76,6 @@ form select {
 }
 
 /*Button CSS */
-#submitBtn {
-  background-color: rgb(10, 10, 10);
-  color: white;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-#submitBtn:hover {
-  background-color: rgb(109, 109, 109);
-  cursor: pointer;
-}
 button {
   background-color: rgb(10, 10, 10);
   color: white;
@@ -117,17 +92,17 @@ button:hover {
 }
 
 /* table css */
+
 table {
   width: 100%;
-  border: 1px solid black;
+  border-collapse: collapse;
 }
 td {
+  border: 1px solid black;
   padding: 5px;
   text-align: start;
 }
-tr {
-  border: 1px solid black;
-}
+
 .table-main {
   flex: 0 0 80%;
   width: 100%;
@@ -141,61 +116,69 @@ th {
   text-align: start;
   min-width: 120px;
 }
-table {
-  border-collapse: collapse;
+.notes {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
 }
-button.edit,
-button.delete {
-  margin-right: 5px;
+
+.model {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
-#clearBtn {
-  display: none;
-}
-/*edit delete btn */
-.delete,
-.edit {
-  border: 1px solid rgb(0, 0, 0);
+
+.modal-container {
+  background-color: #fff;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
   border-radius: 8px;
-  width: 70px;
-  height: 23px;
-  cursor: pointer;
-  font-size: 14px;
-  box-shadow: 0 2px 2px bisque;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+}
+.modal-container > p {
+  font-size: larger;
+  margin-bottom: 30px;
+}
+#closeModalBtn,
+#confirmModalBtn,
+#closeModalBtn1 {
+  margin-top: 10px;
+  font-size: large;
+  margin-inline: 30px;
 }
 
 /* media queies */
 @media screen and (max-width: 600px) {
   .main-div {
     flex-direction: column;
-    padding: 0px;
   }
   .main-form,
   .table-main {
     flex: 0 0 100%;
   }
-  .header {
-    font-size: small;
-  }
-}
-@media screen and (max-width: 900px) {
-  .main-div {
-    padding: 10px;
-    flex-direction: column;
-  }
-  .main-form,
   .table-main {
-    flex: 0 0 100%;
-    padding: 1px;
-  }
-  .delete {
-    margin-top: 2px;
-  }
-  #date {
-    min-width: 100px;
+    margin-top: 5px;
   }
   .action {
     display: flex;
     justify-content: space-around;
-    gap: 5px;
+    align-items: center;
+    min-width: 140px;
+  }
+  .header {
+    font-size: small;
+  }
+  .modal-container {
+    width: 95%;
+    padding: 15px;
   }
 }

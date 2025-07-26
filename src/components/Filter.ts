@@ -3,6 +3,7 @@ import { renderApp } from "./App";
 
 export function Search() {
   const searchBox = document.createElement("form");
+  const filterModel = document.createElement("div");
   //get current search state
   const searchValue = searchState();
   searchBox.innerHTML = `
@@ -12,6 +13,23 @@ export function Search() {
        <button type="button" id="cancel">X</button>
     </div>
   `;
+  // Model form filter warrning ,
+  filterModel.innerHTML = `
+  <div id="mainModelSearch" style="display : none">
+     <div id="customeModel" class="model">
+      <div class="modal-container">
+         <p>Please enter somthing !</p>
+         <button id="closeModalBtn">X</button>
+      </div>
+  </div>
+  </div>
+`;
+  searchBox.appendChild(filterModel);
+  //model CLOse
+  const closeBtn = filterModel.querySelector("#closeModalBtn");
+  closeBtn?.addEventListener("click", () => {
+    document.getElementById("mainModelSearch")!.style.display = "none";
+  });
 
   const input: HTMLInputElement | null = searchBox.querySelector("#searchBox");
   const cancelBtn: HTMLButtonElement | null =
@@ -24,7 +42,8 @@ export function Search() {
       setSearch(searchQuery);
       renderApp();
     } else {
-      alert("Please enter somthing !");
+      const openModel = document.getElementById("mainModelSearch");
+      openModel!.style.display = "block";
     }
   };
   //cancel
