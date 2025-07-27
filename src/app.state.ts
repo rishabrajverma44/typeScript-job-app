@@ -1,4 +1,9 @@
-import { loadFromStorage, saveToStorage } from "./app.storage";
+import {
+  loadFromStorage,
+  saveSearchString,
+  saveToStorage,
+} from "./app.storage";
+import { renderApp } from "./components/App";
 import { generateId } from "./utils/id";
 
 export interface formInterface {
@@ -53,6 +58,7 @@ export function deleteById(id: string) {
   const filterForm = state.forms.filter((form) => form.Id !== id);
   state.forms = filterForm;
   saveToStorage();
+  renderApp();
 }
 // set edit form by id
 export function formEdidMood(id: string) {
@@ -61,6 +67,7 @@ export function formEdidMood(id: string) {
       (form) => form.Id === id
     );
     state.form = currentForm;
+    renderApp();
   }
 }
 // update and add new form
@@ -89,6 +96,7 @@ export function setForm(form: formInterface) {
   };
   state.formstatus = false;
   saveToStorage();
+  renderApp();
 }
 // export header object for showing nubers
 export function getStatus() {
@@ -118,6 +126,8 @@ export function setSearch(search: string) {
   });
   state.searchQuery = search;
   state.forms = filteredForms;
+  saveSearchString();
+  renderApp();
 }
 //export search state
 export function searchState() {
@@ -126,5 +136,7 @@ export function searchState() {
 //clear
 export function clearSearch() {
   state.searchQuery = "";
+  saveSearchString();
   loadFromStorage();
+  renderApp();
 }

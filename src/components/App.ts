@@ -30,7 +30,7 @@ export function renderApp() {
 
   app.appendChild(mainDiv);
 
-  //we can evalute is my current html node present then replace html node so it will act as clean up html or refresh DOM
+  //we can evalute is my current html node present then replace html node so it will act as clean up html or refresh
   const currentHTML = root?.querySelector(".my-app");
   if (currentHTML) {
     root?.replaceChild(app, currentHTML);

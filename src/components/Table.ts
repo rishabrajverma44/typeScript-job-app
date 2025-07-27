@@ -5,7 +5,6 @@ import {
   getFormStatus,
   searchState,
 } from "../app.state";
-import { renderApp } from "./App";
 
 export function Table() {
   //get current state
@@ -22,21 +21,21 @@ export function Table() {
     <tbody>
         ${formDatas
           .map(
-            (form) => `<tr>
-          <td>${form.company}</td>
-          <td>${form.role}</td>
-          <td>${form.jobType}</td>
-          <td>${form.location === "" ? "N/A" : form.location}</td>
-          <td>${form.date}</td>
-          <td style="color:${
+            (form) => `<tr role="row">
+          <td role="cell">${form.company}</td>
+          <td role="cell>${form.role}</td>
+          <td role="cell">${form.jobType}</td>
+          <td role="cell">${form.location === "" ? "N/A" : form.location}</td>
+          <td role="cell">${form.date}</td>
+          <td role="cell" style="color:${
             form.status === "Rejected"
               ? "red"
               : form.status === "Hired"
               ? "green"
               : ""
           }">${form.status}</td>
-          <td class="notes">${form.notes}</td>
-          <td class="action" >
+          <td role="cell" class="notes">${form.notes}</td>
+          <td role="cell" class="action" >
             <button class="edit-btn" data-id=${form.Id}>Edit</button>
             <button class="delete-btn" data-id=${form.Id}>Delete</button>
           </td>
@@ -49,7 +48,7 @@ export function Table() {
 
   // Model form state saving,
   model.innerHTML = `
-  <div id="mainModel" style="display : none">
+  <div role="alert" id="mainModel" style="display : none">
      <div id="customeModel" class="model">
       <div class="modal-container">
          <p>Please save unsaved data !</p>
@@ -60,7 +59,7 @@ export function Table() {
 `;
   // Model for deleting form,
   modelDelete.innerHTML = `
-  <div id="mainModelDelete" style="display : none">
+  <div role="alert" id="mainModelDelete" style="display : none">
      <div id="customeModel" class="model">
       <div class="modal-container">
          <p>Are you sure want to delete ?</p>
@@ -74,10 +73,10 @@ export function Table() {
   tableDiv.appendChild(model);
   tableDiv.appendChild(modelDelete);
   if (formDatas.length === 0 && searchState() !== "") {
-    tableDiv.innerHTML = `<table><h1 class="not-found"> No  search result found !</h1></table>`;
+    tableDiv.innerHTML = `<table><h1 class="not-found"> No  search result result found !</h1></table>`;
   }
   if (formDatas.length === 0 && searchState() === "") {
-    tableDiv.innerHTML = `<h1 class="not-found"> No form !</h1>`;
+    tableDiv.innerHTML = `<h1 class="not-found"> No form found !</h1>`;
   }
 
   //model
@@ -109,7 +108,7 @@ export function Table() {
           ?.addEventListener("click", () => {
             const id = deleteBtn.dataset.id;
             deleteById(id);
-            renderApp();
+            // renderApp();
           });
       });
     });
@@ -125,7 +124,7 @@ export function Table() {
         } else {
           const id = editBtn.dataset.id;
           formEdidMood(id);
-          renderApp();
+          // renderApp();
         }
       });
     });
