@@ -1,6 +1,5 @@
 import { Search } from "./Filter";
 import { Form } from "./Form";
-import { FormNew } from "./Form1";
 import { Header } from "./Header";
 import { Table } from "./Table";
 
@@ -22,17 +21,16 @@ export function renderApp() {
   formDiv.className = "form-div";
 
   formDiv.appendChild(Search());
-  // formDiv.appendChild(Table());
-  formDiv.appendChild(Form());
+  formDiv.appendChild(Table());
 
-  mainDiv.appendChild(FormNew());
+  mainDiv.appendChild(Form());
   mainDiv.appendChild(formDiv);
 
   app.appendChild(mainDiv);
 
   app.appendChild(mainDiv);
 
-  //we can evalute is my current html node present then replace html node so it will act as clean up html or refresh DOM
+  //we can evalute is my current html node present then replace html node so it will act as clean up html or refresh
   const currentHTML = root?.querySelector(".my-app");
   if (currentHTML) {
     root?.replaceChild(app, currentHTML);

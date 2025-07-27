@@ -1,227 +1,287 @@
 import { getFormState, setForm, setFormStatus } from "../app.state";
 
 export function Form() {
-  const formState = getFormState();
 
+
+  const formState = getFormState();
   const formDiv = document.createElement("div");
   formDiv.className = "main-form";
   const form = document.createElement("form");
-  formDiv.appendChild(form);
-  formDiv.innerHTML = `<form>
-  <div id='applicationForm'>
-      <label for="company">Company Name:</label>
-      <input type="text" id="company" placeholder="Company name" value="${
-        formState.company || ""
-      }"  />
-      <span class="validation-error" id="errorCompany">Enter company name</span>
-
-      <label for="role">Role:</label>
-      <input type="text" id="role" placeholder="Enter role" value="${
-        formState.role || ""
-      }" />
-      <span class="validation-error" id="errorJobRole">Enter job role</span>
-
-      <label for="jobType">Job Type:</label>
-      <select id="jobType">
-        <option value="" disabled ${
-          !formState.jobType ? "selected" : ""
-        }>Select job type</option>
-        <option value="Remote" ${
-          formState.jobType === "Remote" ? "selected" : ""
-        }>Remote</option>
-        <option value="Onsite" ${
-          formState.jobType === "Onsite" ? "selected" : ""
-        }>Onsite</option>
-        <option value="Hybrid" ${
-          formState.jobType === "Hybrid" ? "selected" : ""
-        }>Hybrid</option>
-      </select>
-      <span class="validation-error" id="errorJobType">Select job type</span>
-
-      <label for="location" id="locationLabel">Location:</label>
-      <input type="text" id="location" placeholder="Enter location" value="${
-        formState.location || ""
-      }" />
-      <span class="validation-error" id="errorLocation">Enter location</span>
-
-      <label for="date">Application Date:</label>
-      <input type="date" id="date" value="${formState.date || ""}" />
-      <span class="validation-error" id="errorDate">Select date</span>
-
-      <label for="status">Application Status:</label>
-      <select id="status" class="form-control">
-        <option value="" disabled ${
-          !formState.status ? "selected" : ""
-        }>Select status</option>
-        <option value="Applied" ${
-          formState.status === "Applied" ? "selected" : ""
-        }>Applied</option>
-        <option value="Interviewing" ${
-          formState.status === "Interviewing" ? "selected" : ""
-        }>Interviewing</option>
-        <option value="Rejected" ${
-          formState.status === "Rejected" ? "selected" : ""
-        }>Rejected</option>
-        <option value="Hired" ${
-          formState.status === "Hired" ? "selected" : ""
-        }>Hired</option>
-      </select>
-      <span class="validation-error" id="errorJobStatus">Select job status</span>
-
-      <label for="notes">Notes:</label>
-      <textarea id="notes" rows="3">${formState.notes || ""}</textarea>
-
-      <button type="submit" id="submitBtn">
-        ${formState.Id ? "Update" : "Submit"} Application
-      </button>
-    </div>
-    </form>
-    `;
-
-  // Grab all DOM elements inside the form
-  const company: HTMLInputElement | null = formDiv.querySelector("#company");
-  const role: HTMLInputElement | null = formDiv.querySelector("#role");
-  const jobType: HTMLInputElement | null = formDiv.querySelector("#jobType");
-  const location: HTMLInputElement | null = formDiv.querySelector("#location");
-  const locationLabel: HTMLInputElement | null =
-    formDiv.querySelector("#locationLabel");
-  const date: HTMLInputElement | null = formDiv.querySelector("#date");
-  const status: HTMLSelectElement | null = formDiv.querySelector("#status");
-  const notes: HTMLInputElement | null = formDiv.querySelector("#notes");
-
-  const errorCompany: HTMLElement | null =
-    formDiv.querySelector("#errorCompany");
-  const errorJobRole: HTMLElement | null =
-    formDiv.querySelector("#errorJobRole");
-  const errorJobType: HTMLElement | null =
-    formDiv.querySelector("#errorJobType");
-  const errorLocation: HTMLElement | null =
-    formDiv.querySelector("#errorLocation");
-  const errorDate: HTMLElement | null = formDiv.querySelector("#errorDate");
-  const errorJobStatus: HTMLElement | null =
-    formDiv.querySelector("#errorJobStatus");
-
-  const toggleLocationField = () => {
-    const isRemote = jobType?.value === "Remote";
-    if (location && locationLabel && errorLocation) {
-      location.disabled = isRemote;
-      location.value = isRemote ? "" : location.value;
-      // locationLabel.style.display = isRemote ? "none" : "block";
-      // errorLocation.style.display =
-      //   isRemote || jobType?.value === "" ? "none" : "block";
-    }
-  };
-
-  jobType?.addEventListener("change", toggleLocationField);
-  toggleLocationField();
-  if (errorLocation) {
-    errorLocation.style.display = "none";
-  }
-  //update state here
-  const updateState = () => {
-    const formData = {
-      Id: formState.Id || null,
-      company: company?.value.trim() || "",
-      role: role?.value.trim() || "",
-      jobType: jobType?.value || "",
-      location: jobType?.value === "Remote" ? "" : location?.value.trim() || "",
-      date: date?.value || "",
-      status: status?.value || "",
-      notes: notes?.value.trim() || "",
+  const newFormDiv = document.createElement("div");
+  newFormDiv.id = "applicationForm";
+  //
+  const checkDirty = () => {
+    const currentFormValues = {
+      company:
+        (document.getElementById("company") as HTMLInputElement)?.value || "",
+      role: (document.getElementById("role") as HTMLInputElement)?.value || "",
+      jobType:
+        (document.getElementById("jobType") as HTMLSelectElement)?.value || "",
+      location:
+        (document.getElementById("location") as HTMLInputElement)?.value || "",
+      date: (document.getElementById("date") as HTMLInputElement)?.value || "",
+      notes:
+        (document.getElementById("notes") as HTMLTextAreaElement)?.value || "",
     };
-    const isDirty = Object.values(formData).some(
-      (val) => val !== "" && val !== null
+
+    const isDirty = Object.entries(currentFormValues).some(
+      ([key, val]) => (formState[key as keyof typeof formState] || "") !== val
     );
     setFormStatus(isDirty);
   };
-  updateState();
-  //validation check function
-  const vlidation = () => {
-    let isValid = true;
-    //validation check
-    const showError = (input: HTMLInputElement, errorElement: HTMLElement) => {
+
+  checkDirty();
+  //error handler
+  type ValidationItem = {
+    input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    error: HTMLSpanElement;
+  };
+  let validationObject: ValidationItem[] = [];
+  const addValidation = (
+    input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+    error: HTMLSpanElement
+  ) => {
+    validationObject.push({ input, error });
+    input.addEventListener("input", () => {
       if (!input.value.trim()) {
-        errorElement.style.display = "block";
         input.style.borderColor = "red";
-        isValid = false;
+        error.style.display = "block";
       } else {
-        errorElement.style.display = "none";
         input.style.borderColor = "";
+        error.style.display = "none";
       }
-    };
-
-    if (company && role && date && errorCompany && errorJobRole && errorDate) {
-      showError(company, errorCompany);
-      showError(role, errorJobRole);
-      showError(date, errorDate);
-    }
-    if (!jobType?.value && errorJobType && jobType) {
-      errorJobType.style.display = "block";
-      jobType.style.borderColor = "red";
-      isValid = false;
-    } else {
-      if (errorJobType && jobType) {
-        errorJobType.style.display = "none";
-        jobType.style.borderColor = "";
-      }
-    }
-    //if not remote then only check location error
-    if (jobType?.value !== "Remote" && location && errorLocation) {
-      showError(location, errorLocation);
-    }
-
-    if (!status?.value && errorJobStatus && status) {
-      errorJobStatus.style.display = "block";
-      status.style.borderColor = "red";
-      isValid = false;
-    } else {
-      if (errorJobStatus && status) {
-        errorJobStatus!.style.display = "none";
-        status.style.borderColor = "";
-      }
-    }
-    return isValid;
+      checkDirty();
+    });
   };
 
-  //
-  [company, role, jobType, location, date, status, notes].forEach((el) => {
-    el?.addEventListener("change", updateState);
-  });
+  //creating separate blocks for input filed and there legends //
 
-  // Hide error spans innitially
-  [
-    errorCompany,
-    errorJobRole,
-    errorJobType,
-    errorLocation,
-    errorJobStatus,
-    errorDate,
-  ].forEach((el) => {
-    if (el) {
-      return (el.style.display = "none");
+  const createFields = ({
+    id,
+    lable,
+    placeholder = "",
+    value = "",
+    type = "",
+    required = true,
+    options = [],
+  }: {
+    id: string;
+    lable: string;
+    placeholder?: string;
+    value: string;
+    type: string;
+    required?: boolean;
+    options?: string[];
+  }) => {
+    //here we can create labels
+    const lableElement = document.createElement("label");
+    lableElement.setAttribute("for", id);
+    
+    lableElement.textContent = lable;
+    //create field here
+    let inputFieldElement!:
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | HTMLSelectElement;
+
+    //distinguish there input type here and give value
+    if (type === "select" && options.length > 0) {
+      const selectElement = document.createElement(type);
+      selectElement.id = id;
+      const placeholder = document.createElement("option");
+      placeholder.textContent = `Select ${lable}`;
+      placeholder.value = "";
+      placeholder.selected = !value;
+      placeholder.disabled = true;
+      selectElement.append(placeholder);
+
+      //add option for selection
+      options.forEach((option) => {
+        const optionElement = document.createElement("option");
+        optionElement.textContent = option;
+        optionElement.value = option;
+        if (option === value) optionElement.selected = true;
+        //condition for location dissable based on job type selection
+        selectElement.append(optionElement);
+      });
+      inputFieldElement = selectElement;
+    } else if (type === "textarea") {
+      const textElement = document.createElement(type);
+      textElement.value = value;
+      textElement.rows = 3;
+      textElement.placeholder = placeholder;
+      textElement.id = id;
+      inputFieldElement = textElement;
+    } else if (type === "input") {
+      const inputElement = document.createElement(type);
+      inputElement.value = value;
+      inputElement.placeholder = placeholder;
+      inputElement.id = id;
+      inputFieldElement = inputElement;
+    } else if (type === "date") {
+      const dateElement = document.createElement("input");
+      dateElement.type = type;
+      dateElement.value = value;
+      dateElement.id = id;
+      dateElement.placeholder = placeholder;
+      inputFieldElement = dateElement;
     }
-  });
+    //error span can be added here
+    const errorSpan = document.createElement("span");
+    errorSpan.className = "validation-error";
+    errorSpan.id = `error-${id}`;
+    errorSpan.textContent = `Enter ${lable.toLowerCase()}`;
+    errorSpan.style.display = "none";
 
+    //append field level, field input, field error span here
+    newFormDiv.appendChild(lableElement);
+    newFormDiv.appendChild(inputFieldElement);
+    newFormDiv.appendChild(errorSpan);
+
+    //attach validation after html-fields are added
+    if (required) {
+      addValidation(inputFieldElement, errorSpan);
+    }
+  };
+  createFields({
+    id: "company",
+    lable: "Company Name",
+    placeholder: "Enter company name",
+    value: formState.company,
+    type: "input",
+    required: true,
+  });
+  createFields({
+    id: "role",
+    lable: "Role",
+    placeholder: "Enter Role",
+    value: formState.role,
+    type: "input",
+    required: true,
+  });
+  createFields({
+    id: "jobType",
+    lable: "Job Type",
+    placeholder: "",
+    value: formState.jobType,
+    type: "select",
+    options: ["Remote", "Onsite", "Hybrid"],
+    required: true,
+  });
+  createFields({
+    id: "Location",
+    lable: "Location",
+    placeholder: "Enter location",
+    value: formState.location,
+    type: "input",
+    required: false,
+  });
+  createFields({
+    id: "date",
+    lable: "Application Date",
+    placeholder: "",
+    value: formState.date,
+    type: "date",
+    required: true,
+  });
+  createFields({
+    id: "status",
+    lable: "Application Status",
+    placeholder: "",
+    value: formState.status,
+    type: "select",
+    required: true,
+    options:["Applied","Interviewing","Rejected","Hired"]
+  });
+  createFields({
+    id: "notes",
+    lable: "Notes",
+    placeholder: "Enter notes",
+    value: formState.notes,
+    type: "textarea",
+    required: false,
+  });
+  //submit button
+  const submitBtn = document.createElement("button");
+  submitBtn.type = "submit";
+  submitBtn.id = "submitBtn";
+  submitBtn.textContent = formState.Id ? "Update" : "Submit";
+
+  //
   //submit
-  formDiv.addEventListener("submit", (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    if (!vlidation()) return;
     // Prepare form
+    let isValid = true;
+    validationObject.forEach(({ input, error }) => {
+      if (!input.value.trim()) {
+        input.style.borderColor = "red";
+        error.style.display = "block";
+        isValid = false;
+      }
+    });
+    if (!isValid) return;
     const formData = {
       Id: formState.Id ? formState.Id : null,
-      company: company?.value.trim() || "",
-      role: role?.value.trim() || "",
-      jobType: jobType?.value || "",
-      location: jobType?.value === "Remote" ? "" : location?.value.trim() || "",
-      date: date?.value || "",
-      status: status?.value || "",
-      notes: notes?.value.trim() || "",
+      company: (
+        document.getElementById("company") as HTMLInputElement
+      )?.value.trim(),
+      role: (document.getElementById("role") as HTMLInputElement)?.value.trim(),
+      jobType: (document.getElementById("jobType") as HTMLSelectElement)?.value,
+      location: (
+        document.getElementById("Location") as HTMLInputElement
+      )?.value.trim(),
+      date: (document.getElementById("date") as HTMLInputElement)?.value,
+      status: (document.getElementById("status") as HTMLSelectElement)?.value,
+      notes: (
+        document.getElementById("notes") as HTMLTextAreaElement
+      )?.value.trim(),
     };
-
     setForm(formData);
-    // renderApp();
+    //renderApp();
   });
+
+  form.appendChild(newFormDiv);
+  //after attaching form to dom add event listener
+  const jobTypeInput = form.querySelector("#jobType") as HTMLSelectElement;
+  const locationInput = form.querySelector("#Location") as HTMLInputElement;
+  const locationError = form.querySelector(
+    "#error-Location"
+  ) as HTMLSpanElement;
+
+  const toggleLocation = () => {
+    const jobType = jobTypeInput.value;
+    if (!locationInput || !locationError) return;
+
+    if (jobType === "Remote") {
+      locationInput.disabled = true;
+      locationInput.value = "";
+      locationInput.style.borderColor = "";
+      locationError.style.display = "none";
+
+      // Remove from validationObject if it exists
+      validationObject = validationObject.filter(
+        (v) => v.input.id !== locationInput.id
+      );
+    } else {
+      locationInput.disabled = false;
+
+      // Add back to validationObject if required and not already present
+      const alreadyExists = validationObject.some(
+        (v) => v.input.id === locationInput.id
+      );
+      if (!alreadyExists) {
+        addValidation(locationInput, locationError);
+      }
+    }
+  };
+
+  toggleLocation();
+  jobTypeInput.addEventListener("change", toggleLocation);
+
+  form.appendChild(submitBtn);
+  formDiv.appendChild(form);
 
   return formDiv;
 }

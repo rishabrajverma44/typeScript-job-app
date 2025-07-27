@@ -73,10 +73,10 @@ export function Table() {
   tableDiv.appendChild(model);
   tableDiv.appendChild(modelDelete);
   if (formDatas.length === 0 && searchState() !== "") {
-    tableDiv.innerHTML = `<table><h1 class="not-found"> No  search result found !</h1></table>`;
+    tableDiv.innerHTML = `<table><h1 class="not-found"> No  search result result found !</h1></table>`;
   }
   if (formDatas.length === 0 && searchState() === "") {
-    tableDiv.innerHTML = `<h1 class="not-found"> No form !</h1>`;
+    tableDiv.innerHTML = `<h1 class="not-found"> No form found !</h1>`;
   }
 
   //model
