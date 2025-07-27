@@ -13,6 +13,7 @@ export function Table() {
   const model = document.createElement("div");
   const modelDelete = document.createElement("div");
   tableDiv.className = "table-main";
+  console.log(formDatas);
   tableDiv.innerHTML = `
   <table>
     <thead>
@@ -23,7 +24,7 @@ export function Table() {
           .map(
             (form) => `<tr role="row">
           <td role="cell">${form.company}</td>
-          <td role="cell>${form.role}</td>
+          <td role="cell">${form.role}</td>
           <td role="cell">${form.jobType}</td>
           <td role="cell">${form.location === "" ? "N/A" : form.location}</td>
           <td role="cell">${form.date}</td>
