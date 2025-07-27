@@ -1,12 +1,11 @@
 import { getFormState, setForm, setFormStatus } from "../app.state";
 
 export function Form() {
-
-
   const formState = getFormState();
   const formDiv = document.createElement("div");
   formDiv.className = "main-form";
   const form = document.createElement("form");
+  form.setAttribute("aria-label", "Job Application Form");
   const newFormDiv = document.createElement("div");
   newFormDiv.id = "applicationForm";
   //
@@ -24,13 +23,12 @@ export function Form() {
         (document.getElementById("notes") as HTMLTextAreaElement)?.value || "",
     };
 
-    const isDirty = Object.entries(currentFormValues).some(
+    return Object.entries(currentFormValues).some(
       ([key, val]) => (formState[key as keyof typeof formState] || "") !== val
     );
-    setFormStatus(isDirty);
   };
-
-  checkDirty();
+  //
+  setFormStatus(checkDirty());
   //error handler
   type ValidationItem = {
     input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
@@ -54,8 +52,7 @@ export function Form() {
     });
   };
 
-  //creating separate blocks for input filed and there legends //
-
+  //creating separate blocks for input filed and there legends  using creteElement();//
   const createFields = ({
     id,
     lable,
@@ -76,7 +73,7 @@ export function Form() {
     //here we can create labels
     const lableElement = document.createElement("label");
     lableElement.setAttribute("for", id);
-    
+
     lableElement.textContent = lable;
     //create field here
     let inputFieldElement!:
@@ -88,6 +85,7 @@ export function Form() {
     if (type === "select" && options.length > 0) {
       const selectElement = document.createElement(type);
       selectElement.id = id;
+      selectElement.name = id;
       const placeholder = document.createElement("option");
       placeholder.textContent = `Select ${lable}`;
       placeholder.value = "";
@@ -111,18 +109,21 @@ export function Form() {
       textElement.rows = 3;
       textElement.placeholder = placeholder;
       textElement.id = id;
+      textElement.name = id;
       inputFieldElement = textElement;
     } else if (type === "input") {
       const inputElement = document.createElement(type);
       inputElement.value = value;
       inputElement.placeholder = placeholder;
       inputElement.id = id;
+      inputElement.name = id;
       inputFieldElement = inputElement;
     } else if (type === "date") {
       const dateElement = document.createElement("input");
       dateElement.type = type;
       dateElement.value = value;
       dateElement.id = id;
+      dateElement.name = id;
       dateElement.placeholder = placeholder;
       inputFieldElement = dateElement;
     }
@@ -132,14 +133,19 @@ export function Form() {
     errorSpan.id = `error-${id}`;
     errorSpan.textContent = `Enter ${lable.toLowerCase()}`;
     errorSpan.style.display = "none";
+    errorSpan.setAttribute("role", "alert");
 
     //append field level, field input, field error span here
     newFormDiv.appendChild(lableElement);
     newFormDiv.appendChild(inputFieldElement);
     newFormDiv.appendChild(errorSpan);
 
+    //add some aria
+    inputFieldElement.setAttribute("aria-label", lable);
     //attach validation after html-fields are added
     if (required) {
+      inputFieldElement.setAttribute("aria-required", "true");
+      inputFieldElement.setAttribute("aria-describedby", `error-${id}`);
       addValidation(inputFieldElement, errorSpan);
     }
   };
@@ -191,7 +197,7 @@ export function Form() {
     value: formState.status,
     type: "select",
     required: true,
-    options:["Applied","Interviewing","Rejected","Hired"]
+    options: ["Applied", "Interviewing", "Rejected", "Hired"],
   });
   createFields({
     id: "notes",
@@ -211,7 +217,6 @@ export function Form() {
   //submit
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     // Prepare form
     let isValid = true;
     validationObject.forEach(({ input, error }) => {
