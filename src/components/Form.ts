@@ -285,7 +285,7 @@ export function Form() {
   toggleLocation();
   jobTypeInput.addEventListener("change", toggleLocation);
 
-  form.appendChild(submitBtn);
+  newFormDiv.appendChild(submitBtn);
   formDiv.appendChild(form);
 
   return formDiv;
