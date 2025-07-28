@@ -114,19 +114,23 @@ export function getStatus() {
 //search filter
 export function setSearch(search: string) {
   const searchQuery = search.trim().toLowerCase();
-  const filteredForms = state.forms.filter((form) => {
-    return (
-      form.company.toLowerCase().includes(searchQuery) ||
-      form.role.toLowerCase().includes(searchQuery) ||
-      form.jobType.toLowerCase().includes(searchQuery) ||
-      form.location.toLowerCase().includes(searchQuery) ||
-      form.status.toLowerCase().includes(searchQuery) ||
-      form.notes.toLowerCase().includes(searchQuery)
-    );
-  });
-  state.searchQuery = search;
-  state.forms = filteredForms;
-  saveSearchString();
+  if (searchQuery === "") {
+    loadFromStorage();
+  } else {
+    const filteredForms = state.forms.filter((form) => {
+      return (
+        form.company.toLowerCase().includes(searchQuery) ||
+        form.role.toLowerCase().includes(searchQuery) ||
+        form.jobType.toLowerCase().includes(searchQuery) ||
+        form.location.toLowerCase().includes(searchQuery) ||
+        form.status.toLowerCase().includes(searchQuery) ||
+        form.notes.toLowerCase().includes(searchQuery)
+      );
+    });
+    state.searchQuery = search;
+    state.forms = filteredForms;
+    saveSearchString();
+  }
   renderApp();
 }
 //export search state
