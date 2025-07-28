@@ -19,9 +19,9 @@ export function Search() {
     searchBox.querySelector("#cancel");
 
   //search debounce function
-  function debounce(func: any, delay: number) {
+  function debounce(func: Function, delay: number) {
     let timeout: number;
-    return function (...args: any[]) {
+    return function (...args: string[]) {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         func(...args);
