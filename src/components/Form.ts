@@ -8,7 +8,7 @@ export function Form() {
   form.setAttribute("aria-label", "Job Application Form");
   const newFormDiv = document.createElement("div");
   newFormDiv.id = "applicationForm";
-  //
+  //form value
   const checkDirty = () => {
     const currentFormValues = {
       company:
@@ -149,6 +149,7 @@ export function Form() {
       addValidation(inputFieldElement, errorSpan);
     }
   };
+  //call custome function for field creation
   createFields({
     id: "company",
     lable: "Company Name",

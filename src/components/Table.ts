@@ -13,7 +13,6 @@ export function Table() {
   const model = document.createElement("div");
   const modelDelete = document.createElement("div");
   tableDiv.className = "table-main";
-  console.log(formDatas);
   tableDiv.innerHTML = `
   <table>
     <thead>

@@ -18,24 +18,44 @@ export function Search() {
   const cancelBtn: HTMLButtonElement | null =
     searchBox.querySelector("#cancel");
 
-  //search
-  function debounce() {
-    setTimeout(() => {
-      const searchQuery = inputSearch?.value.toLowerCase().trim();
-      if (searchQuery !== "" && typeof searchQuery === "string") {
-        setSearch(searchQuery);
-      }
-    }, 1000);
+  //search debounce function
+  function debounce(func: Function, delay: number) {
+    let timeout: number;
+    return function (...args: string[]) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   }
-  //setSearch(searchValue);
-  const handleSearch = (e: any) => {
-    if (e.key == "Enter") return e.preventDefault();
-    debounce();
+
+  // function debounce() {
+  //   setTimeout(() => {
+  //     const searchQuery = inputSearch?.value.toLowerCase().trim();
+  //     if (searchQuery !== "" && typeof searchQuery === "string") {
+  //       setSearch(searchQuery);
+  //     }
+  //   }, 1000);
+  // }
+
+  // Function to be debounce
+  function search(query: string) {
+    setSearch(query);
+  }
+
+  // Create a debounced version of the search function
+  const dSearch = debounce(search, 1000);
+
+  const handleSearch = (e: KeyboardEvent) => {
+    if (e.key === "Enter") return e.preventDefault();
+    const query = inputSearch?.value.toLowerCase().trim() || "";
+    dSearch(query);
   };
   //cancel
   const handleCancel = () => {
     if (inputSearch != null) {
       clearSearch();
+      dSearch("");
     }
   };
 
