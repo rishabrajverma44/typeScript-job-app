@@ -25,3 +25,7 @@ export function saveSearchString() {
     JSON.stringify(state.searchQuery)
   );
 }
+
+export function indexDb(){
+  
+}
