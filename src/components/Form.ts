@@ -210,13 +210,13 @@ export function Form() {
   });
   //submit button
   const submitBtn = document.createElement("button");
-  submitBtn.type = "submit";
+  submitBtn.type = "button";
   submitBtn.id = "submitBtn";
   submitBtn.textContent = formState.Id ? "Update" : "Submit";
 
   //
   //submit
-  form.addEventListener("submit", (e) => {
+  submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
     // Prepare form
     let isValid = true;
