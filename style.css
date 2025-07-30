@@ -24,16 +24,17 @@
   position: absolute;
 }
 #cancel {
-  margin-top: 0px;
+  margin-top: 2px;
   font-size: small;
   position: relative;
   left: 200px;
 }
 #search {
-  margin-top: 0px;
+  margin-top: 2px;
   margin-left: 13px;
   position: relative;
   left: 200px;
+  font-size: 14px;
 }
 /* form */
 /* form {
