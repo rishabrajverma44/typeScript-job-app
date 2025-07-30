@@ -17,27 +17,26 @@ export function Search() {
     searchBox.querySelector("#searchBox");
   const cancelBtn: HTMLButtonElement | null =
     searchBox.querySelector("#cancel");
-  // Function to be debounce
-  function search(query: string) {
-    setSearch(query);
-  }
 
-  const handleSearch = (e: KeyboardEvent) => {
-    if (e.key === "Enter") return e.preventDefault();
+  // Create a debounced version of the search function
+  const handleChange = (e: any) => {
+    console.log(e);
     const query = inputSearch?.value.toLowerCase().trim() || "";
-    search(query);
+    setSearch(query);
   };
+
   //cancel
   const handleCancel = () => {
     if (inputSearch != null) {
       clearSearch();
-      search("");
+      setSearch("");
     }
   };
 
   //control all events here
   window.addEventListener("load", () => setSearch(searchValue));
-  inputSearch?.addEventListener("keyup", (e) => handleSearch(e));
+  inputSearch?.addEventListener("change", (e) => handleChange(e));
+  //inputSearch?.addEventListener("keyup", (e) => handleSearch(e));
   cancelBtn?.addEventListener("click", handleCancel);
 
   return searchBox;
